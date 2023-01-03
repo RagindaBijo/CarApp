@@ -32,12 +32,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-
         supportActionBar?.hide()
         bottomNavigationView = findViewById(R.id.bottomNavView)
         navController = findNavController(R.id.nav_host_fragment)
         bottomNavigationView.setupWithNavController(navController)
 
-
     }
+
+
+
+
 }
