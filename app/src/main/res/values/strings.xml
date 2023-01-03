@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">CarRent</string>
+    <string name="park_1_C">Parking spot N31</string>
+    <string name="park_2_C">Parking spot N32</string>
+    <string name="park_3_C">Parking spot N33</string>
+    <string name="park_4_C">Parking spot N34</string>
+    <string name="park_5_C">Parking spot N35</string>
     <string name="park_1">Parking spot N1</string>
     <string name="park_2">Parking spot N2</string>
     <string name="park_3">Parking spot N3</string>
@@ -30,11 +35,7 @@
     <string name="park_28">Parking spot N28</string>
     <string name="park_29">Parking spot N29</string>
     <string name="park_30">Parking spot N30</string>
-    <string name="park_1_C">Parking spot N31</string>
-    <string name="park_2_C">Parking spot N32</string>
-    <string name="park_3_C">Parking spot N33</string>
-    <string name="park_4_C">Parking spot N34</string>
-    <string name="park_5_C">Parking spot N35</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

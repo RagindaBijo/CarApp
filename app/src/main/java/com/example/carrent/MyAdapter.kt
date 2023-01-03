@@ -6,9 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.imageview.ShapeableImageView
 
-class MyAdapter(private val parkingList:ArrayList<com.example.carrent.List>):RecyclerView.Adapter<MyAdapter.MyViewHolder>(){
+class MyAdapter(private val parkingList:ArrayList<com.example.carrent.List>,private val listener:OnItemClickListener):RecyclerView.Adapter<MyAdapter.MyViewHolder>(){
 
 
 
@@ -21,18 +20,37 @@ class MyAdapter(private val parkingList:ArrayList<com.example.carrent.List>):Rec
         val currentItem=parkingList[position]
         holder.titleImage.setImageResource(currentItem.titleImage)
         holder.titletext.text=currentItem.heading
+        holder.status.text= currentItem.status
+
     }
 
     override fun getItemCount(): Int {
         return  parkingList.size
     }
 
-    class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
+    inner class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView), View.OnClickListener{
 
+        val status:TextView=itemView.findViewById(R.id.item_status)
         val titleImage: ImageView=itemView.findViewById(R.id.item_image)
         val titletext: TextView=itemView.findViewById(R.id.item_text)
 
+        init{
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+            val position:Int=adapterPosition
+            if (position!=RecyclerView.NO_POSITION){
+                listener.onItemClick(position)
+            }
+        }
+
     }
+
+    interface OnItemClickListener{
+        fun onItemClick(position: Int)
+    }
+
 
 
 }

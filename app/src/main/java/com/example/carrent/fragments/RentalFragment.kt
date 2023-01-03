@@ -1,84 +1,121 @@
 package com.example.carrent.fragments
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carrent.MyAdapter
 import com.example.carrent.R
 
-class RentalFragment:Fragment(R.layout.fragment_rental){
+class RentalFragment : Fragment(R.layout.fragment_rental), MyAdapter.OnItemClickListener {
 
-    private lateinit var  adapter:MyAdapter
-    private lateinit var recyclerView:RecyclerView
-    private lateinit var parkingArrayList:ArrayList<com.example.carrent.List>
-
-    lateinit var imageId:Array<Int>
-    lateinit var heading:Array<String>
+    private lateinit var adapter: MyAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var parkingArrayList: ArrayList<com.example.carrent.List>
 
 
+    lateinit var imageId: Array<Int>
+    lateinit var heading: Array<String>
+    lateinit var status: Array<String>
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(TAG, "onStop")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d(TAG, "onDestroyView")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d(TAG, "onDetach")
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         dataInitialize()
 
-        val layoutManager=LinearLayoutManager(context)
-        recyclerView=view.findViewById(R.id.recycler_view)
-        recyclerView.layoutManager=layoutManager
+        val layoutManager = LinearLayoutManager(context)
+        recyclerView = view.findViewById(R.id.recycler_view)
+        recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
-        adapter=MyAdapter(parkingArrayList)
-        recyclerView.adapter=adapter
+        adapter = MyAdapter(parkingArrayList, this)
+        recyclerView.adapter = adapter
 
 
     }
 
+    override fun onItemClick(position: Int) {
+        val clickedItem = parkingArrayList[position]
+        clickedItem.status = "  დაკავებულია  "
+        adapter.notifyItemChanged(position)
+        val spotNameResult = clickedItem.heading
+        val num="1"
+        val spotImage=clickedItem.titleImage
+        val intent = RentalFragmentDirections.actionRentalFragmentToTimeFragment(spotNameResult,spotImage,num)
+        findNavController().navigate(intent)
+    }
 
-
-    private fun dataInitialize(){
-        parkingArrayList= arrayListOf<com.example.carrent.List>()
-        imageId= arrayOf(
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
-            R.drawable.ic_car,
+    private fun dataInitialize() {
+        parkingArrayList = arrayListOf<com.example.carrent.List>()
+        imageId = arrayOf(
             R.drawable.ic_wheelchair,
             R.drawable.ic_wheelchair,
             R.drawable.ic_wheelchair,
             R.drawable.ic_wheelchair,
             R.drawable.ic_wheelchair,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
+            R.drawable.ic_car,
 
 
-        )
+            )
 
-        heading= arrayOf(
+        heading = arrayOf(
             getString(R.string.park_1),
             getString(R.string.park_2),
             getString(R.string.park_3),
@@ -116,8 +153,48 @@ class RentalFragment:Fragment(R.layout.fragment_rental){
             getString(R.string.park_5_C),
         )
 
-        for (i in imageId.indices){
-            val list= com.example.carrent.List(imageId[i], heading[i])
+        status = arrayOf(
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+            "  თავისუფალია  ",
+
+
+            )
+
+        for (i in imageId.indices) {
+            val list = com.example.carrent.List(imageId[i], heading[i], status[i])
             parkingArrayList.add(list)
         }
 
