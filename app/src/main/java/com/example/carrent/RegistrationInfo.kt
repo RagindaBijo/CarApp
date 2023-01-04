@@ -14,7 +14,7 @@ import com.google.firebase.database.ValueEventListener
 class RegistrationInfo : AppCompatActivity() {
 
     private val auth = FirebaseAuth.getInstance()
-    private val db = FirebaseDatabase.getInstance().getReference("USER_INF")
+    private val db = FirebaseDatabase.getInstance().getReference("Users")
     private lateinit var binding: ActivityRegistrationInfoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,12 +44,12 @@ class RegistrationInfo : AppCompatActivity() {
                 Toast.makeText(this, "გრაფა ცარიელია!", Toast.LENGTH_SHORT).show()
             }else{
                 val personInfo = PersonInfo(name,surName,personalID,phoneNumber)
-                db.child(personalID).setValue(personInfo).addOnSuccessListener {
+                db.child(auth.currentUser?.uid!!).setValue(personInfo).addOnSuccessListener {
                     Toast.makeText(this, "წარმატებით დარეგისტრირდით", Toast.LENGTH_SHORT).show()
                     val intent= Intent(this,MainActivity::class.java)
                     startActivity(intent)
                 }.addOnFailureListener {
-                    Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "ხარვეზი!", Toast.LENGTH_SHORT).show()
                 }
 
             }

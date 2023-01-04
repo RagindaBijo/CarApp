@@ -38,7 +38,7 @@ class LogIn : AppCompatActivity() {
             val rPassword=password.text.toString()
 
             if (rMail.isEmpty()||rPassword.isEmpty()){
-                Toast.makeText(this,"Empty!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"გრაფა ცარიელია!", Toast.LENGTH_SHORT).show()
 
                 return@setOnClickListener
             }
@@ -51,7 +51,7 @@ class LogIn : AppCompatActivity() {
                         startActivity(mainPage)
                         finish()
                     }else{
-                        Toast.makeText(this,"Error!",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,"ხარვეზი!",Toast.LENGTH_SHORT).show()
                     }
                 }
 
