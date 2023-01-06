@@ -81,8 +81,6 @@ class TimeFragment : Fragment(R.layout.fragment_time) {
 
                 orderName.text=orderNameRecieved.toString()
                 orderTime.text=orderTimeRecieved.toString()
-            }else {
-                Toast.makeText(this.requireContext(), "მომხმარებელი არ არებობს!", Toast.LENGTH_SHORT).show()
             }
 
         }.addOnFailureListener {
@@ -201,8 +199,13 @@ class TimeFragment : Fragment(R.layout.fragment_time) {
 
                             val spotOrderName = TimeFragmentArgs.fromBundle(requireArguments()).spotNameResult
                             val spotOrderTime = "$data - ${dataH.toInt()+fullTime.toInt()}:$dataM"
+                            val moneyAmmount=""
+                            val name = ""
+                            val surName= ""
+                            val personalID=""
+                            val phoneNumber=""
 
-                            val personInfo = PersonInfo(spotOrderName, spotOrderTime)
+                            val personInfo = PersonInfo(name,surName,personalID,phoneNumber,spotOrderName, spotOrderTime)
                             pd.child(auth.currentUser?.uid!!).setValue(personInfo).addOnSuccessListener {
 
                             }.addOnFailureListener {
