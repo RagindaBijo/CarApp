@@ -75,7 +75,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         plusButton.setOnClickListener{
             moneys=editMoney.text.toString().toDouble()
 
-            if (moneys.toString()==""||moneys.toString()=="0.0"){
+            if (moneys.toString().isEmpty()||moneys.toString()=="0.0"){
                 Toast.makeText(this.requireContext(), "მიუთითეთ სწორი რაოდენობა!", Toast.LENGTH_SHORT).show()
             }else {
 

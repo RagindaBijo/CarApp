@@ -51,7 +51,7 @@ class TimeFragment : Fragment(R.layout.fragment_time) {
     private lateinit var data:String
     private lateinit var dataM:String
     private lateinit var dataH:String
-    private lateinit var time:TextView
+
 
 
 
@@ -66,7 +66,6 @@ class TimeFragment : Fragment(R.layout.fragment_time) {
         timeBookButton = view.findViewById(R.id.book)
         spot = view.findViewById(R.id.spot)
         photo = view.findViewById(R.id.photo)
-        time=view.findViewById(R.id.time)
         orderName=view.findViewById(R.id.orderName)
         orderTime=view.findViewById(R.id.orderTime)
         delete=view.findViewById(R.id.delete)
@@ -139,7 +138,7 @@ class TimeFragment : Fragment(R.layout.fragment_time) {
         delete.setOnClickListener{
 
             builder.setTitle("Alert!")
-                .setMessage("დარწმუნებული ხართ, რომ გსურთ აქაუნთიდან გასვლა?")
+                .setMessage("დარწმუნებული ხართ, რომ გსურთ ჯავშნის გაუქმება?")
                 .setCancelable(true)
                 .setPositiveButton("დიახ"){dialogInterface,it->
                     pd.child(auth.currentUser?.uid!!).removeValue()
@@ -208,7 +207,6 @@ class TimeFragment : Fragment(R.layout.fragment_time) {
                             dataM=simpleDataFormatM.format(calendar.time)
                             simpleDataFormatH=SimpleDateFormat("HH")
                             dataH=simpleDataFormatH.format(calendar.time)
-                            time.text="$data - ${dataH.toInt()+fullTime.toInt()}:$dataM"
                             timeText.text="0"
 
                             orderName.text=TimeFragmentArgs.fromBundle(requireArguments()).spotNameResult

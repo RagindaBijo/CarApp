@@ -6,32 +6,18 @@
     android:layout_height="match_parent"
     android:background="@drawable/luka">
 
-    <TextView
-        android:id="@+id/time"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutWallet"
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/border"
-        android:gravity="center"
-        android:text="00:00-00:00"
-        android:textColor="@color/black"
-        android:textSize="50sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutWallet"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/border"
-        app:layout_constraintTop_toBottomOf="@+id/time">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
@@ -49,9 +35,9 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:gravity="center"
-                android:text="თანხა ანგარიშზე:"
+                android:text="თანხა \nანგარიშზე:"
                 android:textColor="@color/black"
-                android:textSize="22sp"
+                android:textSize="23sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -61,10 +47,10 @@
                 android:id="@+id/moneyInWallet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="3"
+                android:ems="4"
                 android:gravity="end"
                 android:text="0.0"
-                android:textSize="25sp"
+                android:textSize="35sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/moneyText"
@@ -81,7 +67,7 @@
                 android:inputType="textPersonName"
                 android:text="₾"
                 android:textColor="@color/black"
-                android:textSize="23sp"
+                android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/moneyInWallet"
