@@ -144,7 +144,7 @@ class TimeFragment : Fragment(R.layout.fragment_time) {
                 .setPositiveButton("დიახ"){dialogInterface,it->
                     pd.child(auth.currentUser?.uid!!).removeValue()
                     Toast.makeText(this.requireContext(), "ჯავშანი გაუქმებულია!", Toast.LENGTH_SHORT).show()
-                    orderName.text="ჯავშანი არ იძებნება"gi
+                    orderName.text="ჯავშანი არ იძებნება"
                     orderTime.text=""
                 }.setNegativeButton("არა"){dialogInterface,it->
                     dialogInterface.cancel()
