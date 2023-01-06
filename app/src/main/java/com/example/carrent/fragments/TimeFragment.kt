@@ -1,6 +1,6 @@
 package com.example.carrent.fragments
 
-import android.app.AlertDialog
+import  android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -10,7 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.carrent.MainActivity
+import com.example.carrent.LogIn
+import com.example.carrent.OrderInfo
 import com.example.carrent.PersonInfo
 import com.example.carrent.R
 import com.google.firebase.auth.FirebaseAuth
@@ -32,6 +33,7 @@ class TimeFragment : Fragment(R.layout.fragment_time) {
     private lateinit var timeText: TextView
     private lateinit var costText: TextView
     private lateinit var timeBookButton: Button
+    private lateinit var delete: Button
     private lateinit var moneyInWallet:TextView
     private lateinit var orderName:TextView
     private lateinit var orderTime:TextView
@@ -67,6 +69,7 @@ class TimeFragment : Fragment(R.layout.fragment_time) {
         time=view.findViewById(R.id.time)
         orderName=view.findViewById(R.id.orderName)
         orderTime=view.findViewById(R.id.orderTime)
+        delete=view.findViewById(R.id.delete)
         moneyInWallet=view.findViewById(R.id.moneyInWallet)
         builder=AlertDialog.Builder(this.requireContext())
 
@@ -133,6 +136,20 @@ class TimeFragment : Fragment(R.layout.fragment_time) {
         }
 
 
+        delete.setOnClickListener{
+
+            builder.setTitle("Alert!")
+                .setMessage("დარწმუნებული ხართ, რომ გსურთ აქაუნთიდან გასვლა?")
+                .setCancelable(true)
+                .setPositiveButton("დიახ"){dialogInterface,it->
+                    pd.child(auth.currentUser?.uid!!).removeValue()
+                    Toast.makeText(this.requireContext(), "ჯავშანი გაუქმებულია!", Toast.LENGTH_SHORT).show()
+                    orderName.text="ჯავშანი არ იძებნება"gi
+                    orderTime.text=""
+                }.setNegativeButton("არა"){dialogInterface,it->
+                    dialogInterface.cancel()
+                }.show()
+        }
 
         timeBookButton.setOnClickListener {
 
@@ -197,15 +214,11 @@ class TimeFragment : Fragment(R.layout.fragment_time) {
                             orderName.text=TimeFragmentArgs.fromBundle(requireArguments()).spotNameResult
                             orderTime.text="$data - ${dataH.toInt()+fullTime.toInt()}:$dataM"
 
+
                             val spotOrderName = TimeFragmentArgs.fromBundle(requireArguments()).spotNameResult
                             val spotOrderTime = "$data - ${dataH.toInt()+fullTime.toInt()}:$dataM"
-                            val moneyAmmount=""
-                            val name = ""
-                            val surName= ""
-                            val personalID=""
-                            val phoneNumber=""
 
-                            val personInfo = PersonInfo(name,surName,personalID,phoneNumber,spotOrderName, spotOrderTime)
+                            val personInfo = OrderInfo(spotOrderName, spotOrderTime)
                             pd.child(auth.currentUser?.uid!!).setValue(personInfo).addOnSuccessListener {
 
                             }.addOnFailureListener {
