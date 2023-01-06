@@ -1,23 +1,18 @@
 package com.example.carrent.fragments
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.carrent.ForgotPassword
-import com.example.carrent.LogIn
-import com.example.carrent.PersonInfo
-import com.example.carrent.R
+import androidx.navigation.fragment.findNavController
+import com.example.carrent.*
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
@@ -30,7 +25,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private lateinit var displayPhone: TextView
     private lateinit var logOutBtn: Button
     private lateinit var changePassword: Button
-
+    private lateinit var editMoney:EditText
+    private lateinit var plusButton:Button
+    private var moneys=0.0
+    private lateinit var builder:AlertDialog.Builder
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,7 +40,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         displaySurName = view.findViewById(R.id.surName)
         displayID = view.findViewById(R.id.id)
         displayPhone = view.findViewById(R.id.phoneNumber)
+        editMoney=view.findViewById(R.id.editMoney)
+        plusButton=view.findViewById(R.id.plusButton)
 
+
+        builder=AlertDialog.Builder(this.requireContext())
 
         db.child(auth.currentUser?.uid!!).get().addOnSuccessListener {
 
@@ -70,10 +72,72 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
 
 
+        plusButton.setOnClickListener{
+            moneys=editMoney.text.toString().toDouble()
+
+            if (moneys.toString()==""||moneys.toString()=="0.0"){
+                Toast.makeText(this.requireContext(), "მიუთითეთ სწორი რაოდენობა!", Toast.LENGTH_SHORT).show()
+            }else {
+
+                builder.setTitle("Alert!")
+                    .setMessage("დარწმუნებული ხართ, რომ გსურთ თანხის შეტანა?")
+                    .setCancelable(true)
+                    .setPositiveButton("დიახ"){dialogInterface,it->
+
+                        db.child(auth.currentUser?.uid!!).get().addOnSuccessListener {
+
+                            if (it.exists()) {
+
+                                val moneyAmmountIn = it.child("moneyAmmount").value.toString()
+                                val moneyAmmount=(moneyAmmountIn.toDouble()+moneys).toString()
+                                val name = it.child("name").value.toString()
+                                val surName  = it.child("surName").value.toString()
+                                val personalID = it.child("personalID").value.toString()
+                                val phoneNumber  = it.child("phoneNumber").value.toString()
+
+
+                                val changeInfo = PersonInfo(moneyAmmount,name,surName,personalID,phoneNumber)
+                                db.child(auth.currentUser?.uid!!).setValue(changeInfo).addOnSuccessListener {
+
+                                    editMoney.text.clear()
+                                    Toast.makeText(this.requireContext(), "წარმატებით შეავსეთ ანგარიში", Toast.LENGTH_SHORT).show()
+
+
+                                }.addOnFailureListener {
+                                    Toast.makeText(this.requireContext(), "ხარვეზი!", Toast.LENGTH_SHORT).show()
+                                }
+
+                            }else {
+                                Toast.makeText(this.requireContext(), "მომხმარებელი არ არებობს!", Toast.LENGTH_SHORT).show()
+                            }
+
+                        }.addOnFailureListener {
+                            Toast.makeText(this.requireContext(), "ხარვეზი!", Toast.LENGTH_SHORT).show()
+
+                        }
+
+                    }.setNegativeButton("არა"){dialogInterface,it->
+                        dialogInterface.cancel()
+                    }.show()
+
+            }
+
+        }
+
+
         logOutBtn.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            val intent = Intent(this.requireContext(), LogIn::class.java)
-            startActivity(intent)
+
+            builder.setTitle("Alert!")
+                .setMessage("დარწმუნებული ხართ, რომ გსურთ აქაუნთიდან გასვლა?")
+                .setCancelable(true)
+                .setPositiveButton("დიახ"){dialogInterface,it->
+                    FirebaseAuth.getInstance().signOut()
+                    val intent = Intent(this.requireContext(), LogIn::class.java)
+                    startActivity(intent)
+                }.setNegativeButton("არა"){dialogInterface,it->
+                    dialogInterface.cancel()
+                }.show()
+
         }
 
 

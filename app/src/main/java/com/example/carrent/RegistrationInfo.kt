@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.carrent.databinding.ActivityRegistrationInfoBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 class RegistrationInfo : AppCompatActivity() {
 
@@ -37,13 +34,15 @@ class RegistrationInfo : AppCompatActivity() {
             val surName = lastName.text.toString()
             val personalID = numID.text.toString()
             val phoneNumber = numPhone.text.toString()
+            val moneyAmmount="0.0"
+
 
             if (personalID.length<11||phoneNumber.length<9){
                 Toast.makeText(this, "შეავსეთ სწორად!", Toast.LENGTH_SHORT).show()
             }else if (name.isEmpty()||surName.isEmpty()||personalID.isEmpty()||phoneNumber.isEmpty()){
                 Toast.makeText(this, "გრაფა ცარიელია!", Toast.LENGTH_SHORT).show()
             }else{
-                val personInfo = PersonInfo(name,surName,personalID,phoneNumber)
+                val personInfo = PersonInfo(moneyAmmount,name,surName,personalID,phoneNumber)
                 db.child(auth.currentUser?.uid!!).setValue(personInfo).addOnSuccessListener {
                     Toast.makeText(this, "წარმატებით დარეგისტრირდით", Toast.LENGTH_SHORT).show()
                     val intent= Intent(this,MainActivity::class.java)

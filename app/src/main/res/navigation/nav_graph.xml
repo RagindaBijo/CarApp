@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_rentalFragment_to_timeFragment"
             app:destination="@id/timeFragment" />
+        <action
+            android:id="@+id/action_rentalFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 
     <fragment
@@ -35,11 +38,27 @@
             android:name="num"
             android:defaultValue="0"
             app:argType="string" />
+        <action
+            android:id="@+id/action_timeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <argument
+            android:name="moneys"
+            android:defaultValue="0.0"
+            app:argType="float" />
+
+
     </fragment>
 
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.carrent.fragments.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile"/>
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_timeFragment"
+            app:destination="@id/timeFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_rentalFragment"
+            app:destination="@id/rentalFragment" />
+    </fragment>
 </navigation>
