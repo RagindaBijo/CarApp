@@ -9,13 +9,13 @@
     <TextView
         android:id="@+id/time"
         android:layout_width="match_parent"
-        android:layout_height="164dp"
+        android:layout_height="130dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="70dp"
         android:background="@drawable/border"
         android:gravity="center"
-        android:text="00:00:00"
+        android:text="00:00-00:00"
         android:textColor="@color/black"
         android:textSize="50sp"
         android:textStyle="bold"
@@ -27,8 +27,8 @@
         android:id="@+id/constraintLayoutWallet"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/border"
         app:layout_constraintTop_toBottomOf="@+id/time">
@@ -45,8 +45,8 @@
                 android:id="@+id/moneyText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:gravity="center"
                 android:text="თანხა ანგარიშზე:"
@@ -74,15 +74,15 @@
                 android:id="@+id/gel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:ems="1"
-                android:layout_marginStart="5dp"
                 android:gravity="start"
                 android:inputType="textPersonName"
                 android:text="₾"
-                android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="23sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/moneyInWallet"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -94,16 +94,16 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
-
+        android:id="@+id/pay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/border"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayoutWallet">
 
@@ -150,8 +150,8 @@
             android:id="@+id/minus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
             android:layout_marginTop="15dp"
+            android:layout_marginEnd="5dp"
             android:background="@drawable/border"
             android:ems="2"
             android:gravity="center"
@@ -167,10 +167,10 @@
             android:id="@+id/timenumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="5dp"
             android:ems="1"
             android:gravity="end"
-            android:layout_marginTop="15dp"
             android:inputType="textPersonName"
             android:text="0"
             android:textColor="@color/black"
@@ -183,9 +183,9 @@
             android:id="@+id/hour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="10dp"
             android:gravity="center"
-            android:layout_marginTop="15dp"
             android:inputType="textPersonName"
             android:text="სთ"
             android:textColor="@color/black"
@@ -197,8 +197,8 @@
             android:id="@+id/plus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
             android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/border"
             android:ems="2"
             android:gravity="center"
@@ -243,20 +243,18 @@
             android:id="@+id/lari"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="75dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="75dp"
             android:layout_weight="1"
             android:ems="1"
             android:gravity="start"
             android:inputType="textPersonName"
             android:text="₾"
-            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="23sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
-
-
 
 
         <Button
@@ -274,11 +272,80 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintStart_toEndOf="@+id/price"
-            app:layout_constraintTop_toBottomOf="@+id/price"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/price" />
 
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutOrder"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/border"
+        app:layout_constraintTop_toBottomOf="@+id/pay">
+
+
+        <TextView
+            android:id="@+id/orderText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="start"
+            android:text="ჯავშანი:"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:text="ჯავშნის \nგაუქმება"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="18dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/orderText" />
+
+        <TextView
+            android:id="@+id/orderName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ჯავშანი არ იძებნება"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/orderText"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/orderTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/orderText"
+            app:layout_constraintTop_toBottomOf="@+id/orderName" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

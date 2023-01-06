@@ -1,6 +1,7 @@
 package com.example.carrent.fragments
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -9,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.carrent.MainActivity
 import com.example.carrent.PersonInfo
 import com.example.carrent.R
 import com.google.firebase.auth.FirebaseAuth
@@ -20,6 +22,7 @@ import java.util.Calendar
 class TimeFragment : Fragment(R.layout.fragment_time) {
 
     private val auth = FirebaseAuth.getInstance()
+    private val pd = FirebaseDatabase.getInstance().getReference("Order_Info")
     private val db = FirebaseDatabase.getInstance().getReference("Users")
     private lateinit var builder: AlertDialog.Builder
     private lateinit var spot: TextView
@@ -30,6 +33,8 @@ class TimeFragment : Fragment(R.layout.fragment_time) {
     private lateinit var costText: TextView
     private lateinit var timeBookButton: Button
     private lateinit var moneyInWallet:TextView
+    private lateinit var orderName:TextView
+    private lateinit var orderTime:TextView
     private var timeNumberResult = 0
     private var costNumberResult = 0
     private var number="0"
@@ -60,13 +65,30 @@ class TimeFragment : Fragment(R.layout.fragment_time) {
         spot = view.findViewById(R.id.spot)
         photo = view.findViewById(R.id.photo)
         time=view.findViewById(R.id.time)
+        orderName=view.findViewById(R.id.orderName)
+        orderTime=view.findViewById(R.id.orderTime)
         moneyInWallet=view.findViewById(R.id.moneyInWallet)
         builder=AlertDialog.Builder(this.requireContext())
 
         number = TimeFragmentArgs.fromBundle(requireArguments()).num
 
 
+        pd.child(auth.currentUser?.uid!!).get().addOnSuccessListener {
 
+            if (it.exists()) {
+                val orderNameRecieved = it.child("spotOrderName").value
+                val orderTimeRecieved = it.child("spotOrderTime").value
+
+                orderName.text=orderNameRecieved.toString()
+                orderTime.text=orderTimeRecieved.toString()
+            }else {
+                Toast.makeText(this.requireContext(), "მომხმარებელი არ არებობს!", Toast.LENGTH_SHORT).show()
+            }
+
+        }.addOnFailureListener {
+            Toast.makeText(this.requireContext(), "ხარვეზი!", Toast.LENGTH_SHORT).show()
+
+        }
 
 
 
@@ -135,7 +157,6 @@ class TimeFragment : Fragment(R.layout.fragment_time) {
 
                                 if (it.exists()) {
 
-                                    val moneyAmmountIn = it.child("moneyAmmount").value.toString()
                                     val moneyAmmount=(moneyInWallet.text.toString() .toDouble()-costText.text.toString().toDouble()).toString()
                                     val name = it.child("name").value.toString()
                                     val surName  = it.child("surName").value.toString()
@@ -159,6 +180,7 @@ class TimeFragment : Fragment(R.layout.fragment_time) {
 
 
 
+
                             costText.text="0"
                             costNumberResult=0
                             timeNumberResult=0
@@ -173,6 +195,19 @@ class TimeFragment : Fragment(R.layout.fragment_time) {
                             dataH=simpleDataFormatH.format(calendar.time)
                             time.text="$data - ${dataH.toInt()+fullTime.toInt()}:$dataM"
                             timeText.text="0"
+
+                            orderName.text=TimeFragmentArgs.fromBundle(requireArguments()).spotNameResult
+                            orderTime.text="$data - ${dataH.toInt()+fullTime.toInt()}:$dataM"
+
+                            val spotOrderName = TimeFragmentArgs.fromBundle(requireArguments()).spotNameResult
+                            val spotOrderTime = "$data - ${dataH.toInt()+fullTime.toInt()}:$dataM"
+
+                            val personInfo = PersonInfo(spotOrderName, spotOrderTime)
+                            pd.child(auth.currentUser?.uid!!).setValue(personInfo).addOnSuccessListener {
+
+                            }.addOnFailureListener {
+                                Toast.makeText(this.requireContext(), "ხარვეზი!", Toast.LENGTH_SHORT).show()
+                            }
 
                         }.setNegativeButton("არა"){dialogInterface,it->
                             dialogInterface.cancel()

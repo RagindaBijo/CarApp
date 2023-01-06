@@ -6,5 +6,7 @@ data class PersonInfo(
     val surName: String = "",
     val personalID: String = "",
     val phoneNumber: String = "",
+    val spotOrderName:String="",
+    val spotOrderTime:String="",
 
 )
