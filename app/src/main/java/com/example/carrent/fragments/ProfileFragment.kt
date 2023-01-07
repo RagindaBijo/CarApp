@@ -9,7 +9,6 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.example.carrent.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -27,7 +26,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private lateinit var changePassword: Button
     private lateinit var editMoney:EditText
     private lateinit var plusButton:Button
-    private var moneys=0.0
+    private lateinit var moneys:String
+
     private lateinit var builder:AlertDialog.Builder
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,9 +73,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
 
         plusButton.setOnClickListener{
-            moneys=editMoney.text.toString().toDouble()
 
-            if (moneys.toString().isEmpty()||moneys.toString()=="0.0"){
+            moneys=editMoney.text.toString()
+
+            if (moneys.isEmpty()||moneys=="0.0"||moneys=="0"||moneys=="0."){
                 Toast.makeText(this.requireContext(), "მიუთითეთ სწორი რაოდენობა!", Toast.LENGTH_SHORT).show()
             }else {
 
@@ -89,7 +90,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                             if (it.exists()) {
 
                                 val moneyAmmountIn = it.child("moneyAmmount").value.toString()
-                                val moneyAmmount=(moneyAmmountIn.toDouble()+moneys).toString()
+                                val moneyAmmount=(moneyAmmountIn.toDouble()+moneys.toDouble()).toString()
                                 val name = it.child("name").value.toString()
                                 val surName  = it.child("surName").value.toString()
                                 val personalID = it.child("personalID").value.toString()

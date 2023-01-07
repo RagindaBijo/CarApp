@@ -51,6 +51,8 @@ class TimeFragment : Fragment(R.layout.fragment_time) {
     private lateinit var data:String
     private lateinit var dataM:String
     private lateinit var dataH:String
+    private lateinit var spotOrderNameData:String
+    private lateinit var spotOrderTimeData:String
 
 
 
@@ -116,10 +118,12 @@ class TimeFragment : Fragment(R.layout.fragment_time) {
         }
 
         plusText.setOnClickListener {
-            timeNumberResult += 1
-            timeText.text = timeNumberResult.toString()
-            costNumberResult += 2
-            costText.text = costNumberResult.toString()
+            if (timeNumberResult<24){
+                timeNumberResult += 1
+                timeText.text = timeNumberResult.toString()
+                costNumberResult += 2
+                costText.text = costNumberResult.toString()
+            }
 
         }
 
@@ -210,13 +214,36 @@ class TimeFragment : Fragment(R.layout.fragment_time) {
                             timeText.text="0"
 
                             orderName.text=TimeFragmentArgs.fromBundle(requireArguments()).spotNameResult
-                            orderTime.text="$data - ${dataH.toInt()+fullTime.toInt()}:$dataM"
+                            if (dataH.toInt()+fullTime.toInt()<24){
+                                orderTime.text="$data - ${dataH.toInt()+fullTime.toInt()}:$dataM"
+                            }else{
+                                if (dataH.toInt()+fullTime.toInt()-24<10){
+                                    orderTime.text="$data - 0${dataH.toInt()+fullTime.toInt()-24}:$dataM"
+
+                                }else{
+                                    orderTime.text="$data - ${dataH.toInt()+fullTime.toInt()-24}:$dataM"
+                                }
 
 
-                            val spotOrderName = TimeFragmentArgs.fromBundle(requireArguments()).spotNameResult
-                            val spotOrderTime = "$data - ${dataH.toInt()+fullTime.toInt()}:$dataM"
+                            }
 
-                            val personInfo = OrderInfo(spotOrderName, spotOrderTime)
+
+
+                            spotOrderNameData= TimeFragmentArgs.fromBundle(requireArguments()).spotNameResult
+                            spotOrderTimeData = "$data - ${dataH.toInt()+fullTime.toInt()}:$dataM"
+
+                            if (dataH.toInt()+fullTime.toInt()<24){
+                                spotOrderTimeData="$data - ${dataH.toInt()+fullTime.toInt()}:$dataM"
+                            }else{
+                                if (dataH.toInt()+fullTime.toInt()-24<10){
+                                    spotOrderTimeData="$data - 0${dataH.toInt()+fullTime.toInt()-24}:$dataM"
+
+                                }else{
+                                    spotOrderTimeData="$data - ${dataH.toInt()+fullTime.toInt()-24}:$dataM"
+                                }
+                            }
+
+                            val personInfo = OrderInfo(spotOrderNameData, spotOrderTimeData)
                             pd.child(auth.currentUser?.uid!!).setValue(personInfo).addOnSuccessListener {
 
                             }.addOnFailureListener {
