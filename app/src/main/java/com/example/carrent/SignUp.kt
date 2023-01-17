@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.carrent.databinding.ActivitySignUpBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+
 
 class SignUp : AppCompatActivity() {
 

@@ -94,7 +94,14 @@
             android:gravity="center"
             android:layout_gravity="end"/>
 
-
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:padding="5dp"
+            android:text="დამახსოვრება" />
 
         <Button
 
@@ -107,7 +114,9 @@
             android:textStyle="bold"
             android:textSize="30sp"
             android:backgroundTint="@color/purple_700"
-            android:layout_marginTop="70dp" />
+            android:layout_marginTop="30dp" />
+
+
 
     </LinearLayout>
 

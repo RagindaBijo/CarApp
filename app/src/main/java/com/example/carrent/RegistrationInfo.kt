@@ -45,7 +45,7 @@ class RegistrationInfo : AppCompatActivity() {
                 val personInfo = PersonInfo(moneyAmmount,name,surName,personalID,phoneNumber)
                 db.child(auth.currentUser?.uid!!).setValue(personInfo).addOnSuccessListener {
                     Toast.makeText(this, "წარმატებით დარეგისტრირდით", Toast.LENGTH_SHORT).show()
-                    val intent= Intent(this,MainActivity::class.java)
+                    val intent= Intent(this,LogIn::class.java)
                     startActivity(intent)
                 }.addOnFailureListener {
                     Toast.makeText(this, "ხარვეზი!", Toast.LENGTH_SHORT).show()

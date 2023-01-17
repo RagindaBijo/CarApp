@@ -1,8 +1,10 @@
 package com.example.carrent
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.CheckBox
 import android.widget.Toast
 import com.example.carrent.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -10,14 +12,10 @@ import com.google.firebase.auth.FirebaseAuth
 class LogIn : AppCompatActivity() {
 
     private lateinit var binding:ActivityLoginBinding
-
+    private lateinit var check:CheckBox
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        if (FirebaseAuth.getInstance().currentUser != null) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -25,12 +23,26 @@ class LogIn : AppCompatActivity() {
         supportActionBar?.hide()
         binding=ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         val email=binding.loginEmail
         val password=binding.loginPassword
         val logInBtn=binding.login
         val signInBtn=binding.signup
         val forgotPassword=binding.forget
+
+        check=findViewById(R.id.checkBox)
+
+        loadData()
+
+
+        if (check.isChecked){
+            if (FirebaseAuth.getInstance().currentUser != null) {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }
+
+
 
         logInBtn.setOnClickListener {
 
@@ -69,9 +81,27 @@ class LogIn : AppCompatActivity() {
             startActivity(forget)
         }
 
-
-
+        check.setOnClickListener{
+            saveData()
+        }
 
 
     }
+
+
+    private fun saveData() {
+        val sharedPreference=getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+        val editor=sharedPreference.edit()
+        editor.apply {
+            putBoolean("CHECK_KEY",check.isChecked)
+        }.apply()
+    }
+
+    private fun loadData() {
+        val sharedPreferences=getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+        val savedCheck=sharedPreferences.getBoolean("CHECK_KEY", false)
+        check.isChecked=savedCheck
+    }
+
+
 }

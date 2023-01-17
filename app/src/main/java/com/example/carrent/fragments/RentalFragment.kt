@@ -4,18 +4,22 @@ import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carrent.MyAdapter
 import com.example.carrent.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class RentalFragment : Fragment(R.layout.fragment_rental), MyAdapter.OnItemClickListener {
 
     private lateinit var adapter: MyAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var parkingArrayList: ArrayList<com.example.carrent.List>
+
 
 
     lateinit var imageId: Array<Int>
@@ -58,6 +62,7 @@ class RentalFragment : Fragment(R.layout.fragment_rental), MyAdapter.OnItemClick
         recyclerView.setHasFixedSize(true)
         adapter = MyAdapter(parkingArrayList, this)
         recyclerView.adapter = adapter
+
 
 
     }
